@@ -1,0 +1,85 @@
+Phase 1: Foundation & Domain Understanding (Week 1)
+- https://nvd.nist.gov/
+- https://osv.dev/
+osv has lot of vulnerabilities with category for example pypi, vscode, redhat etc.
+it also has datasources including github advisories so wont it create redundancy?
+
+NVD has stsatus like received->awaiting analysis->undergoing analysis->analyzed so which ones to pick from here?
+both have descriptions/summary which are free text maybe use AI for this?
+both nvd and osv data has sources from github advisory and redhat so what to pick and how. Also there is lot of text so how do you think of processing that as they have huge summaries, and free texts - same for the redhat cve database
+
+
+Nouns - Advisory, vulnerabilities, patch, version, severity, vendors, fixes, release, bug, implementation, solution, impact/impacted, source, summary, consequence, workarounds, 
+
+Business Quesations:
+Which of our installed packages have critical vulnerabilities with no fix available?
+What's our "mean time to exposure" (how long between CVE publication and us patching)?
+Which servers have the highest vulnerability density?
+Are we running any packages with actively exploited vulnerabilities (CISA KEV)?
+
+
+
+# Source Strategy
+
+## Primary Sources
+| Source | Purpose | Fields Used | Update Frequency |
+|--------|---------|-------------|------------------|
+| NVD | ... | ... | ... |
+| OSV | ... | ... | ... |
+| Red Hat | ... | ... | ... |
+| CISA KEV | ... | ... | ... |
+
+## Out of Scope (v1)
+- GitHub Advisory (redundant with OSV)
+- ...
+
+## Decisions
+- NVD status filter: Only 'Analyzed' and 'Modified' because...
+- Source priority for CVSS: NVD > OSV because...
+- Free text handling: Store raw, no ML processing in v1
+
+
+Data Sources Summary
+
+NVD (National Vulnerability Database)
+What it is: The US government's official CVE registry. The authoritative source for vulnerability identification and severity scoring.
+What we collect:
+
+CVE ID, status, published/modified dates
+CVSS score and severity (CRITICAL/HIGH/MEDIUM/LOW)
+Description, CWE weakness type
+
+Why we need it: Source of truth for "does this vulnerability exist and how bad is it?"
+
+OSV (Open Source Vulnerabilities)
+What it is: Google-maintained database focused on open source packages. Maps vulnerabilities to specific package versions.
+What we collect:
+
+CVE/OSV ID linkage
+Package name and ecosystem (PyPI, npm, Maven, etc.)
+Affected version ranges (introduced in X, fixed in Y)
+
+Why we need it: NVD tells us what is vulnerable. OSV tells us which exact package versions are affected.
+
+Red Hat Security API
+What it is: Red Hat's database of how CVEs affect their products and what patches they've released.
+What we collect:
+
+Advisory IDs (RHSA-xxxx)
+Affected RHEL products and versions
+Fix state and patched package versions
+
+Why we need it: If your company runs RHEL servers, this tells you which Red Hat patches to apply.
+
+CISA KEV (Known Exploited Vulnerabilities)
+What it is: US government's list of vulnerabilities actively being exploited in the wild.
+What we collect:
+
+CVE ID
+Date added to list
+Ransomware campaign usage flag
+
+Why we need it: Prioritization. A CVE on this list is not theoretical—attackers are using it right now.
+
+Summary Table
+SourceAnswers This QuestionNVDWhat vulnerabilities exist and how severe?OSVWhich package versions are affected?Red HatWhat patches exist for RHEL systems?CISA KEVIs this being actively exploited?

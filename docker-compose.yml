@@ -1,0 +1,20 @@
+version: '3.8' # Docker Compose file format version
+
+services:
+  postgres:
+    # Service name (you can define multiple services)
+    image: postgres:15 # Use official PostgreSQL v15 image from Docker Hub
+    container_name: vuln_postgres # Name for the running container
+    environment:
+      # Environment variables passed into container
+      POSTGRES_USER: vuln_user
+      POSTGRES_PASSWORD: mnbvcxz0987654321
+      POSTGRES_DB: vuln_db
+    ports:
+      - "5432:5432" # Map host port 5432 to container port 5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Persist data even if container stops
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql # Run this SQL on first startup
+
+volumes:
+  postgres_data: # Named volume for data persistence

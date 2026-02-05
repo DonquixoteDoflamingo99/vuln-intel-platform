@@ -1,0 +1,31 @@
+# dbt Project Profile Configuration
+  # Profile name - referenced in dbt_project.yml
+vuln_intel:
+  
+  # You can have multiple outputs (environments)
+  outputs:
+    
+    # Development environment
+    dev:
+      type: postgres              # Database type (postgres, snowflake, bigquery, redshift)
+      host: "{{ env_var('DB_HOST', 'localhost') }}"             # Database server address
+      port: "{{ env_var('DB_PORT', '5432') | int }}"                  # Database port
+      user: "{{ env_var('DB_USER') }}"             # Username
+      password: "{{ env_var('DB_PASSWORD') }}"     # Password
+      dbname: "{{ env_var('DB_NAME') }}"             # Database name
+      schema: staging             # Default schema for models (fallback only)
+      threads: 4                  # Parallel threads (speeds up runs)
+    
+    # Production environment (example)
+    prod:
+      type: postgres
+      host: prod-db.company.com
+      port: 5432
+      user: "{{ env_var('PROD_DB_USER') }}"
+      password: "{{ env_var('PROD_DB_PASSWORD') }}"
+      dbname: vuln_db
+      schema: staging
+      threads: 8
+  
+  # Which output to use by default
+  target: dev

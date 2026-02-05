@@ -7,11 +7,11 @@ services:
     container_name: vuln_postgres # Name for the running container
     environment:
       # Environment variables passed into container
-      POSTGRES_USER: vuln_user
-      POSTGRES_PASSWORD: mnbvcxz0987654321
-      POSTGRES_DB: vuln_db
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
-      - "5432:5432" # Map host port 5432 to container port 5432
+      - "${DB_PORT}:5432" # Map host port 5432 to container port 5432
     volumes:
       - postgres_data:/var/lib/postgresql/data # Persist data even if container stops
       - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql # Run this SQL on first startup

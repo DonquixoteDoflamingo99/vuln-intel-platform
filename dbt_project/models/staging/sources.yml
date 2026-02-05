@@ -1,0 +1,19 @@
+version: 2
+
+sources:
+  - name: raw
+    database: vuln_db
+    schema: raw
+    tables:
+      - name: cisa_kev
+        description: "CISA Known Exploited Vulnerabilities"
+      - name: nvd_cves
+        description: "NVD CVE records"
+      - name: osv_vulnerabilities
+        description: "OSV vulnerability records"
+      - name: osv_affected_packages
+        description: "OSV affected package mappings"
+      - name: redhat_cves
+        description: "Red Hat CVE records"
+      - name: redhat_affected_releases
+        description: "Red Hat affected releases and fixes"

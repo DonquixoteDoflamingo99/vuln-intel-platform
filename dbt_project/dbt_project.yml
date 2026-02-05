@@ -1,0 +1,38 @@
+# Project identity
+name: 'vuln_intel'           # Project name (used in refs, must be unique)
+version: '1.0.0'             # Your version (for tracking)
+
+# Links to profiles.yml
+profile: 'vuln_intel'        # Must match profile name in profiles.yml
+
+# Folder paths (where dbt looks for files)
+model-paths: ["models"]           # SQL models
+analysis-paths: ["analyses"]      # Ad-hoc analysis queries
+test-paths: ["tests"]             # Custom tests
+seed-paths: ["seeds"]             # CSV files to load
+macro-paths: ["macros"]           # Reusable SQL functions
+snapshot-paths: ["snapshots"]     # Slowly changing dimension snapshots
+
+# Folders to delete on `dbt clean`
+clean-targets:
+  - "target"                      # Compiled SQL
+  - "dbt_packages"                # Downloaded packages
+
+# Model configurations (the important part)
+models:
+  vuln_intel:                     # Must match project name above
+    
+    # Staging folder settings
+    staging:
+      +materialized: view         # Create as views (fast, no storage)
+      +schema: staging            # Put in 'staging' schema
+    
+    # Intermediate folder settings
+    intermediate:
+      +materialized: view
+      +schema: intermediate
+    
+    # Marts folder settings
+    marts:
+      +materialized: table        # Create as tables (slower, but faster queries)
+      +schema: marts

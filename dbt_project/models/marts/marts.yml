@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: dim_vulnerabilities
+    description: "Unified vulnerability dimension table"
+    columns:
+      - name: cve_id
+        tests:
+          - unique
+          - not_null
+      - name: cvss_severity
+        tests:
+          - accepted_values:
+              values: ['critical', 'high', 'medium', 'low', null]
+
+  - name: dim_packages
+    description: "Package dimension table"
+    columns:
+      - name: package_id
+        tests:
+          - unique
+          - not_null
+
+  - name: fct_package_vulnerabilities
+    description: "Package vulnerability fact table"
+    columns:
+      - name: osv_id
+        tests:
+          - not_null
+
+  - name: fct_redhat_fixes
+    description: "Red Hat fixes fact table"
+    columns:
+      - name: cve_id
+        tests:
+          - not_null
+
+  - name: rpt_critical_vulnerabilities
+    description: "Critical and high severity vulnerabilities report"

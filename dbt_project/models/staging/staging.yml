@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: stg_cisa_kev
+    description: "Staged CISA KEV data"
+    columns:
+      - name: cve_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_nvd_cves
+    description: "Staged NVD CVE data"
+    columns:
+      - name: cve_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_osv_vulnerabilities
+    description: "Staged OSV vulnerability data"
+    columns:
+      - name: osv_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_osv_affected_packages
+    description: "Staged OSV affected packages"
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_redhat_cves
+    description: "Staged Red Hat CVE data"
+    columns:
+      - name: cve_id
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_redhat_affected_releases
+    description: "Staged Red Hat affected releases"
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null

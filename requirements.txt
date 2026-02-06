@@ -4,3 +4,7 @@ requests==2.31.0
 psycopg2-binary==2.9.9
 python-dotenv==1.0.0
 dbt-postgres==1.7.4
+dagster==1.6.4
+dagster-webserver==1.6.4
+dagster-postgres==0.22.4
+dagster-dbt==0.22.4

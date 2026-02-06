@@ -5,7 +5,10 @@ Source: https://www.cisa.gov/known-exploited-vulnerabilities-catalog
 Data: List of vulnerabilities actively exploited in the wild
 """
 import sys
-sys.path.append('..')
+from pathlib import Path
+
+# Add ingestion directory to path
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import requests
 import json

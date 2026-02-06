@@ -261,6 +261,29 @@ For orchestration (next phase):
 - [Official Dagster Tutorial](https://docs.dagster.io/getting-started)
 - [Dagster with dbt](https://docs.dagster.io/integrations/dbt)
 
+## Orchestration
+
+The pipeline is orchestrated using Dagster.
+
+### Run Dagster UI
+```bash
+cd orchestration
+dagster dev
+```
+
+Open `http://localhost:3000` to view the pipeline.
+
+### Pipeline Flow
+
+1. **Ingestion** (parallel): CISA KEV, NVD, OSV
+2. **Ingestion** (sequential): Red Hat (depends on CISA KEV + NVD)
+3. **Transform**: dbt staging → intermediate → marts
+4. **Test**: dbt tests
+
+### Schedule
+
+Pipeline runs daily at 6:00 AM (when schedule is enabled).
+
 ## License
 
 MIT

@@ -5,7 +5,10 @@ Source: https://nvd.nist.gov/
 Data: Official CVE records with severity scores
 """
 import sys
-sys.path.append('..')
+from pathlib import Path
+
+# Add ingestion directory to path
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import requests
 import json
